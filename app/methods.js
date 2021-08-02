@@ -57,12 +57,15 @@ var name = $("#name").val();
 	universities = JSON.parse(universities);
      }
      universities.push(universityInfo);
-     localStorage.setItem("universities",JSON.stringify(universities));    //uni 
-	
+     localStorage.setItem("universities",JSON.stringify(universities));    //uni
+     $("#name").val("");
+     $("#phone").val("");
+     $("#address").val("");
+
      $.POST(SERVER_URL + "/addUniversity",
-                        universityInfo,
-                        function (data) {
-                        alert(data);
+                         universityInfo,
+                         function (data) {
+           //             alert(data);
 			alert("data inserted successfully");
     });
     //universities.length=0;
@@ -116,12 +119,13 @@ else
 			return;
 		}
        	}
-   }
-   var universityInfo = {
-            "Name": document.getElementById("name").value  };
-    $.DELETE(SERVER_URL + "/deleteUniversity",
-                        universityInfo,
-                        function (data));
+}
+alert("record not found");
+var universityInfo = {
+            "Name": name  };
+$.delete(SERVER_URL + "/deleteUniversity",
+                          universityInfo,
+                          function (data){ alert ("deleted") });
 
 }
 
@@ -192,9 +196,12 @@ if (name == '') {
 		}
 	
 	}
-        $.get(SERVER_URL + "/searchUniversity",
-                            universityInfo,
-                            function (data));
+        $.GET(SERVER_URL + "/searchUniversity",
+                           [universityInfo],
+                           [function (data){
+				    alert("show success");
+
+       }]	);
 	alert("record not found");
     }
  
